@@ -70,11 +70,23 @@ begin
     if Assigned(GlobalDesignHook.LookupRoot) then begin
         sender:=FormEditingHook.GetDesignerForm(GlobalDesignHook.LookupRoot);
         if Assigned(sender) then begin
-          _fuckUp_onActivate_.FuckUP_reSet(sender);
-				end;
-		end;
+            {$ifDef _debugLOG_}
+            DEBUG('_ideEvent_ChangeLookupRoot_', 'targetWND('+sender.ClassName+')'+addr2txt(sender));
+            {$endIf}
+            while Assigned(sender) do begin
+                if sender is TCustomForm then BREAK;
+                sender:=TCustomForm(sender.Parent);
+            end;
+            if Assigned(sender) then begin
+                {$ifDef _debugLOG_}
+                DEBUG('_ideEvent_ChangeLookupRoot_', 'targetWND('+sender.ClassName+')'+addr2txt(sender));
+                {$endIf}
+               _fuckUp_onActivate_.FuckUP_reSet(sender);
+            end;
+        end;
+    end;
     {$ifDef _debugLOG_}
-    DEBUG('_ideEvent_ChangeLookupRoot_', 'targetWND'+addr2txt(sender));
+    DEBUG('_ideEvent_ChangeLookupRoot_', 'targetWND('+sender.ClassName+')'+addr2txt(sender));
     {$endIf}
    _wrkEvent_;
 end;
