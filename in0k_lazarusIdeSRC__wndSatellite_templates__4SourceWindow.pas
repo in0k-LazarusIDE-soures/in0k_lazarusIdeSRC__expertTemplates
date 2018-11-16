@@ -8,27 +8,16 @@ interface
 
 uses {$ifDef in0k_LazarusIdeEXT__DEBUG}in0k_lazarusIdeSRC__wndDEBUG,{$endIf}
   in0k_lazarusIdeSRC__expertCORE,
-
-
-  // in0k_lazarusIdeSRC__fuckUp_onActivate,
   //-------
-  FormEditingIntf,  SrcEditorIntf,
-  PropEdits,
-  //---
-  Forms;
+  SrcEditorIntf;
 
 type
 
  tIn0k_LazIdeEXT__wndStllte_TMPLTs_4SourceWindow=class(tIn0k_lazIdeSRC_expertCORE)
   protected
-   //_fuckUp_onActivate_:tIn0k_lazarusIdeSRC__fuckUp_onActivate;
- protected //< ОСНОВНОЕ событие, все ради него и затевается
     procedure _wrkEvent_; virtual;
- protected //< события IDE провацируещие наше ОСНОВНОЕ
-    //procedure _ideEvent_selfFormActivate_({%H-}sender:tObject);
-    //procedure _ideEvent_ChangeLookupRoot_;
+  protected //< события IDE провацируещие наше ОСНОВНОЕ
     procedure _ideEvent_semWindowFocused_(sender:tObject);
-
   protected
     procedure LazarusIDE_SetUP; override;
     procedure LazarusIDE_CLEAN; override;
@@ -36,8 +25,6 @@ type
     constructor Create;
     destructor DESTROY; override;
   end;
-
-
 
 implementation
 {%region --- возня с ДЕБАГОМ -------------------------------------- /fold}
