@@ -81,7 +81,7 @@ begin
                 {$ifDef _debugLOG_}
                 DEBUG('_ideEvent_ChangeLookupRoot_', 'targetWND('+sender.ClassName+')'+addr2txt(sender));
                 {$endIf}
-               _fuckUp_onActivate_.FuckUP_reSet(sender);
+               _fuckUp_onActivate_.Appaly4Control(sender);
             end;
         end;
     end;
