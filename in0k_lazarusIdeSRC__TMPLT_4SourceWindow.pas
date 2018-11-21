@@ -1,4 +1,4 @@
-unit in0k_lazarusIdeSRC__wndSatellite_templates__4SourceWindow;
+unit in0k_lazarusIdeSRC__TMPLT_4SourceWindow;
 
 {$mode objfpc}{$H+}
 
@@ -13,9 +13,9 @@ uses {$ifDef in0k_LazarusIdeEXT__DEBUG}in0k_lazarusIdeSRC__wndDEBUG,{$endIf}
 
 type
 
- tIn0k_LazIdeEXT__wndStllte_TMPLTs_4SourceWindow=class(tIn0k_lazIdeSRC_expertCORE)
+ tIn0k_lazIdeSRC__TMPLT_4SourceWindow=class(tIn0k_lazIdeSRC_expertCORE)
   protected
-    procedure _wrkEvent_; virtual;
+    procedure _wrkEvent_(const sender:tObject); virtual;
   protected //< события IDE провацируещие наше ОСНОВНОЕ
     procedure _ideEvent_semWindowFocused_(sender:tObject);
   protected
@@ -26,21 +26,24 @@ type
     destructor DESTROY; override;
   end;
 
-implementation
-{%region --- возня с ДЕБАГОМ -------------------------------------- /fold}
+implementation {%region --- возня с ДЕБАГОМ (включить/выключить) -- /fold}
+{$define DEBUG_ON} //< ВКЛЮЧИТЬ ЛОКАЛЬНЫЙ `DEBUG` режим
 {$if declared(in0k_lazarusIdeSRC_DEBUG)}
     // `in0k_lazarusIdeSRC_DEBUG` - это функция ИНДИКАТОР что используется
     //                              моя "система"
     {$define _debugLOG_} //< и типа да ... можно делать ДЕБАГ отметки
 {$endIf}
+{$ifnDEF DEBUG_ON}
+    {$unDef _debugLOG_}
+{$endIf}
 {%endregion}
 
-constructor tIn0k_LazIdeEXT__wndStllte_TMPLTs_4SourceWindow.Create;
+constructor tIn0k_lazIdeSRC__TMPLT_4SourceWindow.Create;
 begin
     inherited;
 end;
 
-destructor tIn0k_LazIdeEXT__wndStllte_TMPLTs_4SourceWindow.DESTROY;
+destructor tIn0k_lazIdeSRC__TMPLT_4SourceWindow.DESTROY;
 begin
     inherited;
 end;
@@ -52,32 +55,36 @@ end;
 // Происходит:
 //   - СОЗДАНИЕ нового окна
 //   - ПЕРЕХОД между уже созданными
-procedure tIn0k_LazIdeEXT__wndStllte_TMPLTs_4SourceWindow._ideEvent_semWindowFocused_(sender:tObject);
+procedure tIn0k_lazIdeSRC__TMPLT_4SourceWindow._ideEvent_semWindowFocused_(sender:tObject);
 begin
     {$ifDef _debugLOG_}
-    DEBUG('_ideEvent_semWindowFocused_', 'targetWND'+addr2txt(Sender));
+    if Assigned(sender)
+    then DEBUG(self.ClassName+'._ideEvent_semWindowFocused_', 'sender:'+sender.ClassName+addr2txt(Sender))
+    else DEBUG(self.ClassName+'._ideEvent_semWindowFocused_', 'sender:NIL');
     {$endIf}
-   _wrkEvent_;
+   _wrkEvent_(sender);
 end;
 
 //------------------------------------------------------------------------------
 
-procedure tIn0k_LazIdeEXT__wndStllte_TMPLTs_4SourceWindow._wrkEvent_;
+procedure tIn0k_lazIdeSRC__TMPLT_4SourceWindow._wrkEvent_(const sender:tObject);
 begin
     {$ifDef _debugLOG_}
-    DEBUG(self.ClassName,'_wrkEvent_');
+    if Assigned(sender)
+    then DEBUG(self.ClassName+'._wrkEvent_', 'sender:'+sender.ClassName+addr2txt(Sender))
+    else DEBUG(self.ClassName+'._wrkEvent_', 'sender:NIL');
     {$endIf}
 end;
 
 //------------------------------------------------------------------------------
 
-procedure tIn0k_LazIdeEXT__wndStllte_TMPLTs_4SourceWindow.LazarusIDE_SetUP;
+procedure tIn0k_lazIdeSRC__TMPLT_4SourceWindow.LazarusIDE_SetUP;
 begin
     inherited;
     SourceEditorManagerIntf.RegisterChangeEvent(semWindowFocused,  @_ideEvent_semWindowFocused_);
 end;
 
-procedure tIn0k_LazIdeEXT__wndStllte_TMPLTs_4SourceWindow.LazarusIDE_CLEAN;
+procedure tIn0k_lazIdeSRC__TMPLT_4SourceWindow.LazarusIDE_CLEAN;
 begin
     inherited;
     SourceEditorManagerIntf.UnRegisterChangeEvent(semWindowFocused,@_ideEvent_semWindowFocused_);
