@@ -17,6 +17,7 @@ type
   protected
     procedure _wrkEvent_(const sender:tObject); virtual;
   protected //< события IDE провацируещие наше ОСНОВНОЕ
+   _last_semWindowFocused_:tObject;
     procedure _ideEvent_semWindowFocused_(sender:tObject);
   protected
     procedure LazarusIDE_SetUP; override;
@@ -41,6 +42,7 @@ implementation {%region --- возня с ДЕБАГОМ (включить/вы�
 constructor tIn0k_lazIdeSRC__TMPLT_4SourceWindow.Create;
 begin
     inherited;
+   _last_semWindowFocused_:=nil;
 end;
 
 destructor tIn0k_lazIdeSRC__TMPLT_4SourceWindow.DESTROY;
@@ -62,7 +64,10 @@ begin
     then DEBUG(self.ClassName+'._ideEvent_semWindowFocused_', 'sender:'+sender.ClassName+addr2txt(Sender))
     else DEBUG(self.ClassName+'._ideEvent_semWindowFocused_', 'sender:NIL');
     {$endIf}
-   _wrkEvent_(sender);
+    if _last_semWindowFocused_<>sender then begin //< исключим МНОГО-кратное срабатывание
+       _last_semWindowFocused_:=sender;
+       _wrkEvent_(sender);
+    end;
 end;
 
 //------------------------------------------------------------------------------
