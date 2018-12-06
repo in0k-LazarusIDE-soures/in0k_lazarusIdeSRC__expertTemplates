@@ -49,7 +49,7 @@ end;
 procedure tIn0k_lazIdeSRC__TMPLT_4SourceEditor.LazarusIDE_SetUP;
 begin
     inherited;
-    SourceEditorManagerIntf.RegisterChangeEvent  (semEditorActivate,@_ideEvent_semEditorActivate_);
+    SourceEditorManagerIntf.RegisterChangeEvent(semEditorActivate,@_ideEvent_semEditorActivate_);
 end;
 
 procedure tIn0k_lazIdeSRC__TMPLT_4SourceEditor.LazarusIDE_CLEAN;

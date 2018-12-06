@@ -13,9 +13,11 @@ uses {$ifDef in0k_LazarusIdeEXT__DEBUG}in0k_lazarusIdeSRC__wndDEBUG,{$endIf}
 
 type
 
+  // ШАБЛОН `LazarusIde PlugIn`.
+  //
  tIn0k_lazIdeSRC__TMPLT_4SourceWindow=class(tIn0k_lazIdeSRC_expertCORE)
   protected
-    procedure _wrkEvent_(const sender:tObject); virtual;
+    procedure _wrkEvent_onActivate_(const sender:tObject); virtual;
   protected //< события IDE провацируещие наше ОСНОВНОЕ
    _last_semWindowFocused_:tObject;
     procedure _ideEvent_semWindowFocused_(sender:tObject);
@@ -66,13 +68,13 @@ begin
     {$endIf}
     if _last_semWindowFocused_<>sender then begin //< исключим МНОГО-кратное срабатывание
        _last_semWindowFocused_:=sender;
-       _wrkEvent_(sender);
+       _wrkEvent_onActivate_(sender);
     end;
 end;
 
 //------------------------------------------------------------------------------
 
-procedure tIn0k_lazIdeSRC__TMPLT_4SourceWindow._wrkEvent_(const sender:tObject);
+procedure tIn0k_lazIdeSRC__TMPLT_4SourceWindow._wrkEvent_onActivate_(const sender:tObject);
 begin
     {$ifDef _debugLOG_}
     if Assigned(sender)
