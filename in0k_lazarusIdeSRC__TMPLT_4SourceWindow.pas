@@ -14,7 +14,8 @@ uses {$ifDef in0k_LazarusIdeEXT__DEBUG}in0k_lazarusIdeSRC__wndDEBUG,{$endIf}
 type
 
   // ШАБЛОН `LazarusIde PlugIn`.
-  //
+  // Генерирует событие `_wrkEvent_onActivate_`:
+  // АКТИВАЦИИ окна `TSourceNotebook` (`РедактораИсходногоКода`)
  tIn0k_lazIdeSRC__TMPLT_4SourceWindow=class(tIn0k_lazIdeSRC_expertCORE)
   protected
     procedure _wrkEvent_onActivate_(const sender:tObject); virtual;
